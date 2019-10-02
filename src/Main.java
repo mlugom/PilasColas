@@ -37,36 +37,44 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         
         Scanner sc = new Scanner(System.in);
-        
+        boolean seguir = true;
         do{
-        int n= sc.nextInt();
+        int n= sc.nextInt(); //Número de productos
         Cola<String> cola = new Cola<>();
         for (int i = 0; i < n; i++) {
-            cola.add(sc.next());
+            cola.add(sc.next()); //Cada uno de los n productos
         }
         
-        int m = sc.nextInt();
+        int m = sc.nextInt(); //Número de tiendas
         
         int nums[] = new int[m];
-        Stack<String> pila[] = new Stack[m];
+        Pila<String> pila[] = new Pila[m];
+        Pila<String> pilaInv[] = new Pila[m];
         for (int i = 0; i < m; i++) {
             nums[i] = sc.nextInt();
-            pila[i] = new Stack<>();
+            pila[i] = new Pila<>();
+            pilaInv[i] = new Pila<>();
         }
         
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < nums[i]; j++) {
-                pila[i].add(cola.poll().toString());
+                pila[i].add(cola.poll());
             }
-            System.out.println(pila[i]);
+            for (int j = 0; j < nums[i]; j++) {
+                pilaInv[i].add(pila[i].poll());
+            }
+            System.out.println(pilaInv[i].toString());
         }
-        System.out.println("Escriba un caracter y presione ENTER para reiniciar.");
-        sc.next();
+        System.out.println("Escriba un caracter y presione ENTER para reiniciar. Escriba *salir* si así lo desea.");
+        String respuesta = sc.next();
+        if(respuesta.equals("salir"))
+            seguir = false;
+            
         limpiarPantalla();
       
        
     
         
-        }while(true);
+        }while(seguir);
     }
 }

@@ -15,19 +15,19 @@ import java.util.Objects;
  */
 public class Cola<S> implements LinearList{
 
-    protected ChainNode<S> firstNode;
-    private ChainNode<S> endNode;
+    protected ChainNode<S> head;
+    private ChainNode<S> tail;
     
 
     public Cola() {
-        firstNode = null;
-        endNode= null;
+        head = new ChainNode(null);
+        tail = new ChainNode(null);
     }
     
     
     @Override
     public boolean isEmpty() {
-        return firstNode == null && endNode == null;
+        return head.getNext()==null;
     }
 
 
@@ -37,9 +37,18 @@ public class Cola<S> implements LinearList{
             System.out.println("Cola vacía");
             return null;
         }else{
-            ChainNode<S> result = this.firstNode.getNext();
-            this.firstNode.setNext(result.getNext());
+            ChainNode<S> result = this.head.getNext();
+            this.head.setNext(result.getNext());
             return result.getElement();
+        }
+    }
+    
+    public Object peek(){
+        if(this.isEmpty()){
+            System.out.println("Cola vacía");
+            return null;
+        }else{
+            return this.head.getNext().getElement();
         }
     }
 
@@ -47,12 +56,12 @@ public class Cola<S> implements LinearList{
     public void add(Object theElement) {
         ChainNode<S> nodo = new ChainNode((S) theElement,null);
         if(this.isEmpty()){
-            this.firstNode.setNext(nodo);
-            this.endNode.setNext(nodo);
+            this.head.setNext(nodo);
+            this.tail.setNext(nodo);
         }else{
             
-            this.endNode.getNext().setNext(nodo);
-            this.endNode.setNext(nodo);
+            this.tail.getNext().setNext(nodo);
+            this.tail.setNext(nodo);
             
         }
     }
